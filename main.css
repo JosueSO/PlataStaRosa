@@ -1,0 +1,78 @@
+body {
+    padding: 5px 15px;
+}
+
+div {
+    border: 2px solid black;
+    margin: 5px;
+}
+
+#logo img {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 100%;
+    max-width: 800px;
+}
+
+div.navi {
+    position: sticky;
+    top: 0;
+    
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+    min-width: 100px;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+    background-color: #111;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+
+.cont {
+    padding: 20px;
+}
+
+.cont div {
+    display: inline-block;
+    width: 32%;
+    text-align: center;
+}
+
+.cont a {
+    margin-left: auto;
+    margin-right: auto
+}
+
+.imageBtn:hover {
+    filter: opacity(.5);
+}
+
+.imageBtn {
+    transition-duration: .5s;
+    display: inline;
+    /*width: 100%;*/
+    max-width: 180px;
+}
