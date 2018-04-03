@@ -14,8 +14,8 @@
     </div>
     <div class="navi">
         <ul>
-            <li><a href="">Piezas</a></li>
-            <li><a href="">Ventas</a></li>
+            <li><a class="active" href="">Piezas</a></li>
+            <li><a href="ventas.html">Ventas</a></li>
             <li><a href="">Apartados</a></li>
             <li><a href="">Mayoristas</a></li>
             <li><a href="">Empleados</a></li>
@@ -23,17 +23,115 @@
           </ul>
     </div>
     <div class="cont">
-        <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris id scelerisque quam. Praesent in metus id lacus venenatis bibendum ut sit amet mi. Fusce ultrices et urna in mollis. Nulla velit erat, pulvinar in vulputate a, sollicitudin eu urna. Nunc imperdiet tortor ornare, molestie sapien vitae, commodo sapien. Praesent in quam vitae urna luctus aliquet. Phasellus ut lacus sed magna euismod accumsan sed id ipsum. Donec viverra mattis diam, sit amet vehicula tortor rhoncus sit amet. Praesent ullamcorper purus at sapien dapibus, eu ullamcorper tellus gravida. Curabitur ut nisi faucibus, mattis mi nec, condimentum sem. Vivamus sit amet vehicula orci. Donec convallis neque vitae imperdiet eleifend. Quisque nunc ipsum, vehicula at risus at, ullamcorper feugiat turpis. Morbi accumsan nec erat quis tempus.</p>
-
-        <p>Nunc a rutrum ante. Integer a vulputate tellus. Vivamus nec sem accumsan, laoreet nunc in, convallis velit. Phasellus dictum, tellus eu ultrices porta, nibh lectus eleifend erat, sit amet suscipit lacus felis eu justo. Aliquam ac sollicitudin ligula. Nulla fermentum turpis in quam hendrerit fringilla. Maecenas id justo ipsum. Pellentesque tristique finibus sagittis. Donec gravida cursus diam vestibulum dapibus. Praesent sit amet purus id lorem accumsan mattis ut quis enim. Morbi eu nunc in lectus condimentum iaculis et eu enim. Fusce magna turpis, ullamcorper vel arcu tincidunt, consequat tincidunt est. Sed ac lacus facilisis, tristique odio sit amet, condimentum ligula. Donec luctus, magna vitae sollicitudin tincidunt, nisi diam condimentum nulla, at hendrerit velit lorem sit amet dolor. Aliquam sodales feugiat gravida.</p>
-
-        <p>Fusce tincidunt molestie interdum. Integer placerat odio fringilla, varius magna id, aliquet sem. Phasellus aliquet volutpat magna, sed volutpat quam convallis vitae. Fusce viverra dictum augue vel pulvinar. Mauris nunc turpis, blandit volutpat convallis in, accumsan et sapien. Etiam felis sem, tempor viverra metus sit amet, mollis venenatis quam. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate, diam at tempus tincidunt, est magna hendrerit sem, ut tristique erat elit vitae felis. Aliquam at faucibus ligula, et ullamcorper purus.</p>
-
-        <p>In hac habitasse platea dictumst. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Phasellus sagittis, erat elementum tristique lacinia, nisl libero aliquam sem, ultricies ultrices felis urna luctus elit. Nam lobortis et magna vel congue. Vivamus placerat at odio vitae ultricies. Sed scelerisque ipsum libero, vitae aliquam mi ornare aliquam. Curabitur feugiat ipsum metus, ac luctus nisi volutpat ut. Mauris molestie arcu id justo finibus tincidunt. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Morbi ac magna at ex scelerisque sollicitudin. Ut egestas, enim porttitor blandit varius, urna lectus egestas massa, non dapibus purus felis a risus. Integer hendrerit blandit mauris consectetur feugiat. Aliquam tristique odio in odio interdum efficitur. Donec mi diam, pretium a ultrices et, pellentesque sed tortor.</p>
-
-        <p>Quisque tempor ex arcu. Quisque placerat dignissim efficitur. Suspendisse condimentum odio vitae nisl volutpat, viverra vestibulum leo cursus. Cras orci tortor, vestibulum non dolor nec, ultrices semper nibh. Vestibulum laoreet nisi at euismod cursus. Maecenas sed urna eu ante molestie ornare non eu massa. Quisque eget mattis dolor. Aliquam feugiat, lectus vel dictum imperdiet, metus turpis tincidunt nibh, id posuere lacus mauris non metus. Nullam ullamcorper congue diam quis elementum. Pellentesque sagittis elit nec tempor vehicula. Ut ac tellus ultricies, pellentesque metus id, consequat tellus. Duis accumsan sagittis erat a imperdiet. Duis sed vulputate turpis. In a faucibus justo, ut vulputate augue.</p>
-
-        <p>In sed nisl mattis, tristique risus nec, eleifend diam. Sed vehicula eros quis condimentum mattis. Pellentesque ultrices a quam in facilisis. Nulla sit amet lectus elit. Praesent dui ante, euismod ut quam porta, iaculis sagittis purus. Phasellus ut diam id nunc iaculis fermentum id vitae turpis. Etiam et laoreet eros, sed pharetra ex. Morbi dolor neque, fringilla in aliquam non, lacinia sit amet tortor. Mauris aliquet nulla eu efficitur mattis. Cras quis erat ut nulla posuere scelerisque.</p>
+        <div class="buttons">
+            <button class="toL">Familias</button>
+            <button class="toL">Categorias</button>
+            <button class="toR">Eliminar</button>
+            <button class="toR">Editar</button>
+            <button class="toR">Nuevo</button>
+        </div>
+        <div class="grid">
+            <table>
+                <tr>
+                    <th>Código</th>
+                    <th>Familia</th> 
+                    <th>Categoría</th>
+                    <th>Precio</th>
+                    <th>Existencia</th>  
+                </tr>
+                <tr class="par">
+                    <td>ANIZIR225</td>
+                    <td>Anillo</td> 
+                    <td>Zirconia</td>
+                    <td class="TtoR">$225</td>
+                    <td class="TtoC">20</td>
+                </tr>
+                <tr class="impar">
+                    <td>ANIZIR225</td>
+                    <td>Anillo</td> 
+                    <td>Zirconia</td>
+                    <td class="TtoR">$225</td>
+                    <td class="TtoC">20</td>
+                </tr>
+                <tr class="par">
+                    <td>ANIZIR225</td>
+                    <td>Anillo</td> 
+                    <td>Zirconia</td>
+                    <td class="TtoR">$225</td>
+                    <td class="TtoC">20</td>
+                </tr>
+                    <tr class="impar">
+                    <td>ANIZIR225</td>
+                    <td>Anillo</td> 
+                    <td>Zirconia</td>
+                    <td class="TtoR">$225</td>
+                    <td class="TtoC">20</td>
+                </tr>
+                <tr class="par">
+                    <td>ANIZIR225</td>
+                    <td>Anillo</td> 
+                    <td>Zirconia</td>
+                    <td class="TtoR">$225</td>
+                    <td class="TtoC">20</td>
+                </tr>
+                <tr class="impar">
+                    <td>ANIZIR225</td>
+                    <td>Anillo</td> 
+                    <td>Zirconia</td>
+                    <td class="TtoR">$225</td>
+                    <td class="TtoC">20</td>
+                </tr>
+                <tr class="par">
+                    <td>ANIZIR225</td>
+                    <td>Anillo</td> 
+                    <td>Zirconia</td>
+                    <td class="TtoR">$225</td>
+                    <td class="TtoC">20</td>
+                </tr>
+                <tr class="impar">
+                    <td>ANIZIR225</td>
+                    <td>Anillo</td> 
+                    <td>Zirconia</td>
+                    <td class="TtoR">$225</td>
+                    <td class="TtoC">20</td>
+                </tr>
+                    <tr class="par">
+                    <td>ANIZIR225</td>
+                    <td>Anillo</td> 
+                    <td>Zirconia</td>
+                    <td class="TtoR">$225</td>
+                    <td class="TtoC">20</td>
+                </tr>
+                <tr class="impar">
+                    <td>ANIZIR225</td>
+                    <td>Anillo</td> 
+                    <td>Zirconia</td>
+                    <td class="TtoR">$225</td>
+                    <td class="TtoC">20</td>
+                </tr>
+                <tr class="par">
+                    <td>ANIZIR225</td>
+                    <td>Anillo</td> 
+                    <td>Zirconia</td>
+                    <td class="TtoR">$225</td>
+                    <td class="TtoC">20</td>
+                </tr>
+                <tr class="impar">
+                    <td>ANIZIR225</td>
+                    <td>Anillo</td> 
+                    <td>Zirconia</td>
+                    <td class="TtoR">$225</td>
+                    <td class="TtoC">20</td>
+                </tr>
+                <tr class="par">
+                    <td>ANIZIR225</td>
+                    <td>Anillo</td> 
+                    <td>Zirconia</td>
+                    <td class="TtoR">$225</td>
+                    <td class="TtoC">20</td>
+                </tr>
+            </table>
+        </div>
     </div>
 </body>
 </html>
