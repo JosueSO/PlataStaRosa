@@ -190,3 +190,20 @@ td {
     text-align: right;
     float: right;
 }
+
+.inputs {
+    display: inline-block;
+    width: 40%;
+    text-align: right;
+    padding: 10px 50px;
+    line-height: 250%;
+    color: rgb(147, 0, 0);
+    font-weight: bold;
+    word-spacing: 10px;
+}
+
+input, select {
+    padding: 5px;
+    font-size: medium;
+    min-width: 200px;
+}
