@@ -22,22 +22,41 @@
 </html>
 
 <?php
-function MakeConnection(){
-
   $user = "postgres"; //MI IP 148.224.56.31
   $password = "Alijonas_963";
-  $dbname = "Rentas";
+  $dbname = "central";
   $port = "5432";
-  $host = "localhost";
+  $host = "localhost"; 
+  $cadenaConexion;
+
+function MakeConnection(){
+
+  global $user = "postgres"; //MI IP 148.224.56.31
+  global $password = "Alijonas_963";
+  global $dbname = "central";
+  global $port = "5432";
+  global $host = "localhost";
   
-  $cadenaConexion = "host=$host port=$port dbname=$dbname user=$user password=$password";
+  global $cadenaConexion = "host=$host port=$port dbname=$dbname user=$user password=$password";
   
   $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: ".pg_last_error());
   echo "<h3>Conexion Exitosa PHP - PostgreSQL</h3><hr><br>";
   
-  $query = "select * from \"Cliente\"";
+  $query = "select * from \"Atributos\"";
   $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
   var_dump($resultado);
+  $fila=pg_fetch_array($resultado);
+  echo $fila[1];
+}
+
+function Inserta_Pieza(){
+  $query = "insert into \"Pieza\" (codigo, familia, categoria, proveedor, precio, existencia) 
+            values (" .$codigo. "," . $familia . ",". $categoria . "," . $proveedor . "," . $precio . "," . $existencia . ")";
+  $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
+  var_dump($resultado);
+  while($resultado){
+    //imprimir todos los resultados en una tabla
+  }
   $fila=pg_fetch_array($resultado);
   echo $fila[1];
 }

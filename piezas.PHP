@@ -9,6 +9,9 @@
     <script src="main.js"></script>
 </head>
 <body>
+    <?php
+    piezas();
+    ?>
     <div id="logo">
         <img src="images/logoPlata.png"/>
     </div>
@@ -135,3 +138,19 @@
     </div>
 </body>
 </html>
+
+<?php
+    function piezas(){
+        $query = "select * from Fragmentos WHERE tabla='Pieza'";
+        $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
+        var_dump($resultado);
+        $i = 0;
+        while($resultado){
+            $fila=pg_fetch_array($resultado);
+            echo $fila[$i];
+            $i++;
+         }
+        
+}
+    }
+?>
