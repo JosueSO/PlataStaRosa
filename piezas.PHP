@@ -6,35 +6,32 @@
     <title>Plata Sta. Rosa</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <script src="main.js"></script>
+    <script src="jquery-3.3.1.js"></script>
 </head>
 <body>
-    <?php
-    piezas();
-    ?>
     <div id="logo">
         <img src="images/logoPlata.png"/>
     </div>
     <div class="navi">
         <ul>
             <li><a class="active" href="">Piezas</a></li>
-            <li><a href="ventas.html">Ventas</a></li>
-            <li><a href="apartados.html">Apartados</a></li>
-            <li><a href="mayoristas.html">Mayoristas</a></li>
-            <li><a href="empleados.html">Empleados</a></li>
-            <li><a href="proveedores.html">Proveedores</a></li>
+            <li><a href="ventas.php">Ventas</a></li>
+            <li><a href="apartados.php">Apartados</a></li>
+            <li><a href="mayoristas.php">Mayoristas</a></li>
+            <li><a href="empleados.php">Empleados</a></li>
+            <li><a href="proveedores.php">Proveedores</a></li>
           </ul>
     </div>
     <div class="cont">
         <div class="buttons">
-            <a href="familias.html"><button class="toL">Familias</button></a>
-            <button class="toL">Categorias</button>
+            <a href="familias.php"><button class="toL">Familias</button></a>
+            <a href="categorias.php"><button class="toL">Categorias</button></a>
             <button class="toR">Eliminar</button>
             <button class="toR">Editar</button>
-            <a href="nueva_pieza.html"><button class="toR">Nuevo</button></a>
+            <a href="nueva_pieza.php"><button class="toR">Nuevo</button></a>
         </div>
         <div class="grid">
-            <table>
+            <table id="TablaPiezas">
                 <tr>
                     <th>Código</th>
                     <th>Familia</th> 
@@ -42,115 +39,147 @@
                     <th>Precio</th>
                     <th>Existencia</th>  
                 </tr>
-                <tr class="par">
+                <?php
+                    $conexion;
+                    MakeConnection();
+                    piezas();
+                ?>
+                <!-- <tr class="par">
                     <td>ANIZIR225</td>
                     <td>Anillo</td> 
                     <td>Zirconia</td>
                     <td class="TtoR">$225</td>
                     <td class="TtoC">20</td>
-                </tr>
-                <tr class="impar">
-                    <td>ANIZIR225</td>
-                    <td>Anillo</td> 
-                    <td>Zirconia</td>
-                    <td class="TtoR">$225</td>
-                    <td class="TtoC">20</td>
-                </tr>
-                <tr class="par">
-                    <td>ANIZIR225</td>
-                    <td>Anillo</td> 
-                    <td>Zirconia</td>
-                    <td class="TtoR">$225</td>
-                    <td class="TtoC">20</td>
-                </tr>
-                    <tr class="impar">
-                    <td>ANIZIR225</td>
-                    <td>Anillo</td> 
-                    <td>Zirconia</td>
-                    <td class="TtoR">$225</td>
-                    <td class="TtoC">20</td>
-                </tr>
-                <tr class="par">
-                    <td>ANIZIR225</td>
-                    <td>Anillo</td> 
-                    <td>Zirconia</td>
-                    <td class="TtoR">$225</td>
-                    <td class="TtoC">20</td>
-                </tr>
-                <tr class="impar">
-                    <td>ANIZIR225</td>
-                    <td>Anillo</td> 
-                    <td>Zirconia</td>
-                    <td class="TtoR">$225</td>
-                    <td class="TtoC">20</td>
-                </tr>
-                <tr class="par">
-                    <td>ANIZIR225</td>
-                    <td>Anillo</td> 
-                    <td>Zirconia</td>
-                    <td class="TtoR">$225</td>
-                    <td class="TtoC">20</td>
-                </tr>
-                <tr class="impar">
-                    <td>ANIZIR225</td>
-                    <td>Anillo</td> 
-                    <td>Zirconia</td>
-                    <td class="TtoR">$225</td>
-                    <td class="TtoC">20</td>
-                </tr>
-                    <tr class="par">
-                    <td>ANIZIR225</td>
-                    <td>Anillo</td> 
-                    <td>Zirconia</td>
-                    <td class="TtoR">$225</td>
-                    <td class="TtoC">20</td>
-                </tr>
-                <tr class="impar">
-                    <td>ANIZIR225</td>
-                    <td>Anillo</td> 
-                    <td>Zirconia</td>
-                    <td class="TtoR">$225</td>
-                    <td class="TtoC">20</td>
-                </tr>
-                <tr class="par">
-                    <td>ANIZIR225</td>
-                    <td>Anillo</td> 
-                    <td>Zirconia</td>
-                    <td class="TtoR">$225</td>
-                    <td class="TtoC">20</td>
-                </tr>
-                <tr class="impar">
-                    <td>ANIZIR225</td>
-                    <td>Anillo</td> 
-                    <td>Zirconia</td>
-                    <td class="TtoR">$225</td>
-                    <td class="TtoC">20</td>
-                </tr>
-                <tr class="par">
-                    <td>ANIZIR225</td>
-                    <td>Anillo</td> 
-                    <td>Zirconia</td>
-                    <td class="TtoR">$225</td>
-                    <td class="TtoC">20</td>
-                </tr>
+                </tr> -->
+                
             </table>
+            <input type="text" id="Resultado" />
         </div>
     </div>
 </body>
 </html>
 
 <?php
-    function piezas(){
-        $query = "select * from Fragmentos WHERE tabla='Pieza'";
+    function MakeConnection(){
+        $user = "postgres"; //MI IP 148.224.56.31
+        $password = "Alijonas_963";
+        $dbname = "central";
+        $port = "5432";
+        $host = "localhost";
+        global $conexion;
+        $cadenaConexion = "host=$host port=$port dbname=$dbname user=$user password=$password";
+        $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: ".pg_last_error());
+        //echo "<h3>Conexion Exitosa PHP - PostgreSQL</h3><hr><br>";
+    
+        $query = "select * from \"Atributos\"";
         $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
-        var_dump($resultado);
-        $i = 0;
-        while($resultado){
-            $fila=pg_fetch_array($resultado);
-            echo $fila[$i];
-            $i++;
-         }
-        
-}
+        //var_dump($resultado);
+        $fila=pg_fetch_array($resultado);
+        //echo $fila[1];
     }
+
+    function piezas(){
+        //MakeConnection();
+        global $conexion;
+        $query = "select * from \"Fragmentos\" WHERE tabla='Pieza'";
+        $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
+        //var_dump($resultado);
+        //$i = 0;
+        while($fila=pg_fetch_array($resultado)){
+            if($fila[3] == 1)
+                piezasS1($fila[1]);
+            else
+                piezasS2($fila[1]);
+            //$i++;
+            /*<tr class="par">
+                    <td>ANIZIR225</td>
+                    <td>Anillo</td> 
+                    <td>Zirconia</td>
+                    <td class="TtoR">$225</td>
+                    <td class="TtoC">20</td>
+                </tr>*/
+        }
+    }
+
+    function piezasS1($table){
+        $user = "postgres";
+        $password = "Alijonas_963";
+        $dbname = "sta_rosa";
+        $port = "5432";
+        $host = "localhost";
+        $cadenaConexion = "host=$host port=$port dbname=$dbname user=$user password=$password";
+        try{
+            $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: ".pg_last_error());
+            $query = "select * from \"$table\"";
+            $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
+
+            $i = 0;
+            while($fila = pg_fetch_array($resultado)){
+                if ($i % 2 != 0)
+                    echo "<tr class='par'>";
+                else
+                    echo "<tr class='impar'>";
+                
+                for($i = 0; $i < count($fila)/2; $i++){
+                    echo "<td>".$fila[$i]."</td>";
+                }
+                echo "</tr>";
+                $i++;
+            }
+        }
+        catch(PDOException $ex){
+            echo 'Error en la conexión' . $ex->getMessage();
+    }
+    }
+
+    function piezasS2($table){
+        $usuario = "root";
+        $fuente = "mysql:host=localhost;dbname=sta_rosa";
+        try{
+            $conexion = new PDO($fuente, $usuario);
+            //echo 'Conexión establecida';
+            
+            $sql = "SELECT * FROM $table";
+            $resultado = $conexion->query($sql);
+
+            $i = 0;
+            while(($fila = $resultado->fetch(PDO::FETCH_NUM)) != false){
+                if ($i % 2 != 0)
+                    echo "<tr class='par'>";
+                else
+                    echo "<tr class='impar'>";
+                
+                foreach($fila as $elemento){
+                    echo "<td>".$elemento."</td>";
+                }
+                echo "</tr>";
+
+                $i++;
+            }
+        }
+        catch(PDOException $ex){
+                echo 'Error en la conexión' . $ex->getMessage();
+        }
+        
+    }
+
+
 ?>
+
+<script>
+    var ultimaFila = null;
+    var colorOriginal;
+
+    $('#TablaPiezas tr').on('click',function(){
+        var dato = $(this).find('td:first').html();
+        $('#Resultado').val(dato);
+
+        if(ultimaFila != null) {
+            ultimaFila.css("background-color", colorOriginal);
+        }
+
+        colorOriginal = $(this).find('td').css('background-color');
+        $(this).find('td').css("background-color","red");
+        ultimaFila = $(this).find('td');
+    });
+</script>
