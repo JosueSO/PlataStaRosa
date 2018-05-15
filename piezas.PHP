@@ -22,12 +22,13 @@
             <li><a href="proveedores.php">Proveedores</a></li>
           </ul>
     </div>
+    <form action="nueva_pieza.php" method="GET" id="form1">
     <div class="cont">
         <div class="buttons">
             <a href="familias.php"><button class="toL">Familias</button></a>
             <a href="categorias.php"><button class="toL">Categorias</button></a>
             <button class="toR">Eliminar</button>
-            <button class="toR">Editar</button>
+            <button class="toR" type="submit" form="form1" value="Submit">Editar</button>
             <a href="nueva_pieza.php"><button class="toR">Nuevo</button></a>
         </div>
         <div class="grid">
@@ -53,9 +54,14 @@
                 </tr> -->
                 
             </table>
-            <input type="text" id="Resultado" />
+            <input type="text" id="R1" name="id"/>
+            <input type="text" id="R2" name="familia"/>
+            <input type="text" id="R3" name="categoria"/>
+            <input type="text" id="R4" name="precio"/>
+            <input type="text" id="R5" name="unidades"/>
         </div>
     </div>
+    </form>
 </body>
 </html>
 
@@ -171,9 +177,6 @@
     var colorOriginal;
 
     $('#TablaPiezas tr').on('click',function(){
-        var dato = $(this).find('td:first').html();
-        $('#Resultado').val(dato);
-
         if(ultimaFila != null) {
             ultimaFila.css("background-color", colorOriginal);
         }
@@ -181,5 +184,11 @@
         colorOriginal = $(this).find('td').css('background-color');
         $(this).find('td').css("background-color","red");
         ultimaFila = $(this).find('td');
+
+        $('#R1').val($(this).find('td:first').html()); 
+        $('#R2').val($(this).find('td:nth-child(2)').html());
+        $('#R3').val($(this).find('td:nth-child(3)').html());
+        $('#R4').val($(this).find('td:nth-child(4)').html());
+        $('#R5').val($(this).find('td:nth-child(5)').html());
     });
 </script>
