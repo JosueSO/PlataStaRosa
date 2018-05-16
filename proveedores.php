@@ -22,13 +22,15 @@
             <li><a class="active">Proveedores</a></li>
           </ul>
     </div>
-    <form method="POST" id="form1">
+    <form method="POST" id="form2">
     <input type="text" id="Resultado" name="RES"/>
     <div class="cont">
         <div class="buttons">
             <button class="toR" type="submit" value="Eliminar" name="Eliminar">Eliminar</button>
-            <!--button class="toR">Editar</button-->
-            <a href="nuevo_proveedor.php"><button class="toR" form="form2">Nuevo</button></a>
+</form>
+<form action="nuevo_proveedor.php" method="GET" id="form1">
+            <button class="toR" type="submit" form="form1" value="Submit">Editar</button>
+            <a href="nuevo_proveedor.php"><button class="toR" form="form3">Nuevo</button></a>
         </div>
         <div class="grid">
             <table id="TablaProvedores">
@@ -45,6 +47,10 @@
                     Proveedores();
                 ?>
             </table>
+            <input type="text" id="R1" name="id"/>
+            <input type="text" id="R2" name="nombre"/>
+            <input type="text" id="R3" name="telefono"/>
+            <input type="text" id="R4" name="domicilio"/>
         </div>
     </div>
     </form>
@@ -238,5 +244,10 @@ function eliminar($table, $id){
         colorOriginal = $(this).find('td').css('background-color');
         $(this).find('td').css("background-color","red");
         ultimaFila = $(this).find('td');
+
+        $('#R1').val($(this).find('td:first').html()); 
+        $('#R2').val($(this).find('td:nth-child(2)').html());
+        $('#R3').val($(this).find('td:nth-child(3)').html());
+        $('#R4').val($(this).find('td:nth-child(4)').html());
     });
 </script>

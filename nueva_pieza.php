@@ -34,6 +34,29 @@
             $familia = "";
             $prov;
             MakeConnection();
+            if($_SERVER['REQUEST_METHOD']=='GET'){
+                $r1 = $_GET['id'];
+                $r2 = "'".$_GET['familia']."'";
+                $r3 = "'".$_GET['categoria']."'";
+                $r4 = $_GET['precio'];
+                $r5 = $_GET['unidades'];
+                echo $r1;
+                echo "<script> $('#R1').val($r1); </script>";
+                echo "<script> $('#R4').val(".$r4."); </script>";
+                echo "<script> $('#R5').val($r5); </script>";
+            
+                $_POST['flag'] = true;
+                if(isset($_GET['Eliminar'])){
+                      MakeConnection();
+                      eliminar('Pieza',$r1);
+                      header('Location: piezas.php');
+                }
+            }
+            else{
+                $_POST['flag'] = false;
+            }
+
+
             if($_SERVER['REQUEST_METHOD']=='POST'){
                 //echo "Aqui si funciona";
                 piezas("Pieza");
@@ -78,27 +101,6 @@
 </html>
 
 <?php
-    if($_SERVER['REQUEST_METHOD']=='GET'){
-        $r1 = "'".$_GET['id']."'";
-        $r2 = "'".$_GET['familia']."'";
-        $r3 = "'".$_GET['categoria']."'";
-        $r4 = $_GET['precio'];
-        $r5 = $_GET['unidades'];
-        echo $r1;
-        echo "<script> $('#R1').val($r1); </script>";
-        echo "<script> $('#R4').val(".$r4."); </script>";
-        echo "<script> $('#R5').val(".$r5."); </script>";
-    
-        $_POST['flag'] = true;
-        //if(isset($_GET['Eliminar'])){
-        //    MakeConnection();
-        //    eliminar('Mayorista',$r1);
-        //}
-    }
-    else{
-        $_POST['flag'] = false;
-        echo "hola";
-    }
 
     function MakeConnection(){
         $user = "postgres";
@@ -283,7 +285,11 @@
         try{
             
             $conexionpg = pg_connect($cadenaConexion) or die("Error en la Conexión: ".pg_last_error());
+            if(isset($_GET['id'])){
+                $query ="update \"$table\" set id_pieza='".$_POST['codigo']."', id_familia ='".$familia."', id_categoria='".$codigo."',precio =".$_POST['Pecio'].",cantidad=".$_POST['Existencia']." WHERE id_pieza = '".$_GET['id']."'";
+            }else{
             $query = "insert into \"$table\" VALUES ('".$_POST['Codigo']."','".$familia."','".$codigo."',".$_POST['Precio'].",".$_POST['Existencia'].")";
+        }
             echo $query;
             $resultado = pg_query($conexionpg, $query) or die("Error en la Consulta SQL");
         }
@@ -301,10 +307,15 @@
             CategoriayFamilia('Familia','Categoria');
             $conexion = new PDO($fuente, $usuario);
             //echo 'Conexión establecida';
-            
+            if(isset($_GET['id'])){
+                echo 'SI ENTRA'. $_GET['id'] ;
+                $sql="update $table set id_pieza='".$_POST['Codigo']."', id_familia ='".$familia."', id_categoria='".$codigo."',precio =" .$_POST['Precio']. ",cantidad=" .$_POST['Existencia'] . ", WHERE id_pieza='".$_GET['id']."'";
+            }else{
             $sql = "insert into $table values('".$_POST['Codigo']."','".$familia."','".$codigo."',".$_POST['Precio'].",".$_POST['Existencia'].")";
+        }
             echo $sql;
             $resultado = $conexion->query($sql);
+            echo 'llego aqui but no hace nada';
         }
         catch(PDOException $ex){
                 echo 'Error en la conexión' . $ex->getMessage();
@@ -459,4 +470,54 @@
         }
     }
 
+    function eliminar($table, $id){
+        global $conexion;
+        $query = "select * from \"Fragmentos\" WHERE tabla='$table'";
+        echo $id;
+        $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
+        echo $resultado;
+        while($fila=pg_fetch_array($resultado)){
+            if($fila['sitio']== 1){
+            eliminaPG($fila[1],$id);
+        }
+            else{
+            eliminaMSQL($fila[1],$id);
+            }
+        }
+
+    }
+    function eliminaPG($table, $id){
+        $user = "postgres";
+        $password = "Alijonas_963";
+        $dbname = "sta_rosa";
+        $port = "5432";
+        $host = "localhost";
+        $cadenaConexion = "host=$host port=$port dbname=$dbname user=$user password=$password";
+        $conexionps = pg_connect($cadenaConexion) or die("Error en la Conexión: ".pg_last_error());
+        try{
+            
+            $sql = "DELETE FROM \"$table\" WHERE id_pieza ='" .$id. "'" ;
+            $resultado = pg_query($conexionps, $sql) or die("Error en la Consulta SQL");
+            //header('Location: piezas.php');
+        }
+        catch(PDOException $ex){
+            echo 'Error en la conexión' . $ex->getMessage();
+        }
+    }
+
+    function eliminaMSQL($table, $id){
+        $usuario = "root";
+        $fuente = "mysql:host=localhost;dbname=sta_rosa";
+        try{
+            $conexion = new PDO($fuente, $usuario);
+            //echo 'Conexión establecida';
+                $sql = "DELETE FROM $table WHERE id_pieza ='" .$id. "'" ;
+                //echo $sql;
+                $resultado = $conexion->query($sql);
+                
+            }
+        catch(PDOException $ex){
+                echo 'Error en la conexión' . $ex->getMessage();
+        }
+    }
 ?>

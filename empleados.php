@@ -22,13 +22,16 @@
             <li><a href="proveedores.php">Proveedores</a></li>
           </ul>
     </div>
-    <form method="POST" id="form1">
+    <form method="POST" id="form2">
     <input type="text" id="Resultado" name="RES"/>
+    
     <div class="cont">
         <div class="buttons">
             <button class="toR" type="submit" value="Eliminar" name="Eliminar">Eliminar</button>
-            <!--button class="toR">Editar</button-->
-            <a href="nuevo_empleado.php" ><button class="toR" form="form2">Nuevo</button></a>
+</form>
+<form action="nuevo_empleado.php" method="GET" id="form1">
+            <button class="toR" type="submit" form="form1" value="Submit">Editar</button>
+            <a href="nuevo_empleado.php" ><button class="toR" form="form3">Nuevo</button></a>
         </div>
         <div class="grid">
             <table id="TablaEmpleados">
@@ -55,7 +58,13 @@
                     Empleados();
                 ?>
             </table>
-            
+            <input type="text" id="R1" name="id"/>
+            <input type="text" id="R2" name="name"/>
+            <input type="text" id="R3" name="lastname"/>
+            <input type="text" id="R4" name="tel"/>
+            <input type="text" id="R5" name="sueldo"/>
+            <input type="text" id="R6" name="contrasena"/>
+            <input type="text" id="R7" name="domicilio"/>
         </div>
     </div>
     </form>
@@ -66,8 +75,9 @@
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
     echo $_POST['RES'];
-    MakeConnection();
-    eliminar('Empleado',$_POST['RES']);
+    //if(isset($_GET['Eliminar'])){
+        MakeConnection();
+        eliminar('Empleado',$_POST['RES']);
     //header("Location: apartados.php");
 }
 
@@ -261,5 +271,13 @@ function eliminar($table, $id){
         colorOriginal = $(this).find('td').css('background-color');
         $(this).find('td').css("background-color","red");
         ultimaFila = $(this).find('td');
+
+        $('#R1').val($(this).find('td:first').html()); 
+        $('#R2').val($(this).find('td:nth-child(2)').html());
+        $('#R3').val($(this).find('td:nth-child(3)').html());
+        $('#R4').val($(this).find('td:nth-child(4)').html());
+        $('#R5').val($(this).find('td:nth-child(5)').html());
+        $('#R6').val($(this).find('td:nth-child(6)').html());
+        $('#R7').val($(this).find('td:nth-child(7)').html());
     });
 </script>
