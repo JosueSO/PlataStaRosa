@@ -222,6 +222,7 @@ function eliminaMSQL($table, $id){
         if(ultimaFila != null) {
             ultimaFila.css("background-color", colorOriginal);
         }
+        
 
         colorOriginal = $(this).find('td').css('background-color');
         $(this).find('td').css("background-color","red");
