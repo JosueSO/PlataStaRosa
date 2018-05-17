@@ -33,200 +33,40 @@
                 2018/04/01
             </div>
             <div id="clienteApartado">
-                Fulanito
-                <br>123456789
             </div>
-            <table class="listP">
-                <tr>
+                <!-- <tr>
                     <th>Pieza</th>
                     <th>Precio</th>
-                </tr>
+                </tr> -->
                 <!-- <tr>
                     <td>ANIZIR250</td>
                     <td class="TtoC">$250</td>
                 </tr> -->
                 <span id="piezasApartado">
-                <?php
-                    $conexion;
-                    MakeConnection();
-
-                    function MakeTicket(){
-                        global $conexionpg;
-                        $query = "select * from \"Fragmentos\" WHERE tabla='DetalleApartado'";
-                        //echo $table;
-                        $resultado = pg_query($conexionpg, $query) or die("Error en la Consulta SQL");
-                        //echo $resultado;
-                        $fila=pg_fetch_array($resultado);
-                        $table = $fila[1];
-
-                        $user = "postgres";
-                        $password = "Alijonas_963";
-                        $dbname = "sta_rosa";
-                        $port = "5432";
-                        $host = "localhost";
-                        $cadenaConexion = "host=$host port=$port dbname=$dbname user=$user password=$password";
-                        try{
-                            $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: ".pg_last_error());
-                            $id_apartado = "<script> document.write($('idApartado').text() </script>";
-                            $query = "SELECT * FROM \"$table\" WHERE id_apartado = ".$id_apartado;
-                            $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
-
-                            while($fila = pg_fetch_array($resultado)) != false){
-                                echo "<tr>";
-                                echo "<td>".$fila[1]."</td>";
-                                getPiece($fila[1],"Pieza");
-                                echo "</tr>";
-                            }
-
-                            $id_emp = "<script> document.write($('empleadoApartado').text() </script>";
-                            getEmp("Empleado",$id_emp);
-                        }
-                        catch(PDOException $ex){
-                                echo 'Error en la conexión' . $ex->getMessage();
-                        }
-                    }
-
-                    function getPiece($id_Pieza, $table){
-                        global $conexionpg;
-                        $query = "select * from \"Fragmentos\" WHERE tabla='$table'";
-                        //echo $table;
-                        $resultado = pg_query($conexionpg, $query) or die("Error en la Consulta SQL");
-                        //echo $resultado;
-                        while($fila=pg_fetch_array($resultado)){
-                            if ($fila[3] == 1){
-                                if (p1($fila[1], $id_Pieza) == true) {
-                                    break;
-                                }
-                            }else{
-                                if (p2($fila[1], $id_Pieza) == true) {
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-                    function p1($table, $id_Pieza){
-                        $user = "postgres";
-                        $password = "Alijonas_963";
-                        $dbname = "sta_rosa";
-                        $port = "5432";
-                        $host = "localhost";
-                        $cadenaConexion = "host=$host port=$port dbname=$dbname user=$user password=$password";
-                        try{
-                            $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: ".pg_last_error());
-                            $query = "SELECT precio FROM \"$table\" WHERE id_pieza = ".$id_Pieza;
-                            $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
-
-                            if($fila = pg_fetch_array($resultado)){
-                                echo "<td class='TtoC'>".$fila[0]."</td>";
-                                return true;
-                            }else{
-                                return false;
-                            }
-                        }
-                        catch(PDOException $ex){
-                            return;
-                            echo 'Error en la conexión' . $ex->getMessage();
-                        }
-                    }
-
-                    function p2($table, $id_Pieza){
-                        $usuario = "root";
-                        $fuente = "mysql:host=localhost;dbname=sta_rosa";
-                        try{
-                            $conexion = new PDO($fuente, $usuario);
-                            //echo 'Conexión establecida';
-                            
-                            $sql = "SELECT precio FROM $table WHERE id_pieza = ".$id_Pieza;
-                            $resultado = $conexion->query($sql);
-                            if($fila = $resultado->fetch(PDO::FETCH_NUM)) != false){
-                                echo "<td class='TtoC'>".$fila[0]."</td>";
-                                return true;
-                            }else {
-                                return false;
-                            }
-                        }
-                        catch(PDOException $ex){
-                            return;
-                            echo 'Error en la conexión' . $ex->getMessage();
-                        }
-                    }
-
-                    function getEmp($table, $id_emp){
-                        global $conexionpg;
-                        $query = "select * from \"Fragmentos\" WHERE tabla='$table'";
-                        $resultado = pg_query($conexionpg, $query) or die("Error en la Consulta SQL");
-
-                        while($fila=pg_fetch_array($resultado)){
-                            if ($fila[3] == 1){
-                                if (e1($fila[1], $id_emp) == true) {
-                                    break;
-                                }
-                            }else{
-                                if (e2($fila[1], $id_emp) == true) {
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-                    function e1($table, $id_emp){
-                        $user = "postgres";
-                        $password = "Alijonas_963";
-                        $dbname = "sta_rosa";
-                        $port = "5432";
-                        $host = "localhost";
-                        $cadenaConexion = "host=$host port=$port dbname=$dbname user=$user password=$password";
-                        try{
-                            $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: ".pg_last_error());
-                            $query = "SELECT nombre FROM \"$table\" WHERE id_empleado = ".$id_emp;
-                            $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
-
-                            if($fila = pg_fetch_array($resultado)){
-                                echo "<script> $('empleadoApartado').text('Atendió ".$fila[0]."'); </script>";
-                                return true;
-                            }else{
-                                return false;
-                            }
-                        }
-                        catch(PDOException $ex){
-                            return;
-                            echo 'Error en la conexión' . $ex->getMessage();
-                        }
-                    }
-
-                    function e2($table, $id_emp){
-                        $usuario = "root";
-                        $fuente = "mysql:host=localhost;dbname=sta_rosa";
-                        try{
-                            $conexion = new PDO($fuente, $usuario);
-                            //echo 'Conexión establecida';
-                            
-                            $sql = "SELECT nombre FROM $table WHERE id_empleado = ".$id_emp;
-                            $resultado = $conexion->query($sql);
-                            if($fila = $resultado->fetch(PDO::FETCH_NUM)) != false){
-                                echo "<script> $('empleadoApartado').text('Atendió ".$fila[0]."'); </script>";
-                                return true;
-                            }else {
-                                return false;
-                            }
-                        }
-                        catch(PDOException $ex){
-                            return;
-                            echo 'Error en la conexión' . $ex->getMessage();
-                        }
-                    }
-
-                ?>
-                <script>
+                
+                <script type='text/javascript'>
                     $('#idApartado').on('DOMSubtreeModified', function() {
                         if ($('#idApartado').text() != ""){
+                            //console.log("Hola");
                             $('#piezasApartado').html("");
-                            <?php echo MakeTicket(); ?>
+                            //console.log($('#empleadoVenta').text());
+                            $.ajax({
+                                type: "POST",
+                                url: "getTicket2.php",
+                                data: { 
+                                    "idApartado" :  $('#idApartado').text().substring(10),
+                                    "idEmpleado": $('#empleadoApartado').text()
+                                },
+                                success: function(data){
+                                    $('#piezasApartado').html(data);
+                                }
+                            });
+                            
                         }
                     });
-                </script>
+            </script>
                 </span>
+            <table class="listP">
                 <tr class="blankspace">
                     <td ></td>
                     <td ></td>
@@ -244,7 +84,6 @@
                     <td class="TtoC" id="restanteApartado"></td>
                 </tr>
             </table>
-            <input type="text" id="Resultado" />
             <div id="empleadoApartado">
             </div>
         </div>
@@ -269,8 +108,10 @@
                     <th>Fecha</th>
                 </tr>
                 <?php
-                        Apartados("Apartado");
-                    ?>
+                    $conexion;
+                    MakeConnection();
+                    Apartados("Apartado");
+                ?>
             </table>
         </div>
     </div>
@@ -314,7 +155,9 @@ function Apartados($table){
             consulta($fila[1]);
         }
   }   
+  $conexionpg;
 function consulta($tabla){
+    global $conexionpg;
         $user = "postgres";
         $password = "Alijonas_963";
         $dbname = "sta_rosa";
@@ -322,9 +165,9 @@ function consulta($tabla){
         $host = "localhost";
         $cadenaConexion = "host=$host port=$port dbname=$dbname user=$user password=$password";
         try{
-            $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: ".pg_last_error());
+            $conexionpg = pg_connect($cadenaConexion) or die("Error en la Conexión: ".pg_last_error());
             $query = "select * from \"$tabla\"";
-            $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
+            $resultado = pg_query($conexionpg, $query) or die("Error en la Consulta SQL");
     
             while($fila = pg_fetch_array($resultado)){
                 echo "<tr class='par'>";
@@ -350,13 +193,13 @@ function consulta($tabla){
 }
 
 function eliminaPG($table, $id){
-    global $conexion;
+    global $conexionpg;
     try{
         
             $sql = "DELETE FROM \"$table\" WHERE id_apartado =" .$id ;
             //echo $sql;
-            $resultado = pg_query($conexion, $sql) or die("Error en la Consulta SQL");
-            header('Location: apartados.php');
+            $resultado = pg_query($conexionpg, $sql) or die("Error en la Consulta SQL");
+            //header('Location: apartados.php');
             
         }
     catch(PDOException $ex){
@@ -370,8 +213,6 @@ function eliminaPG($table, $id){
     var colorOriginal;
 
     $('#TablaApartados tr').on('click',function(){
-        var dato = $(this).find('td:first').html();
-        $('#Resultado').val(dato);
 
         if(ultimaFila != null) {
             ultimaFila.css("background-color", colorOriginal);
@@ -380,14 +221,14 @@ function eliminaPG($table, $id){
         colorOriginal = $(this).find('td').css('background-color');
         $(this).find('td').css("background-color","red");
         ultimaFila = $(this).find('td');
-
-        $('idApartado').text("Venta #" + $(this).find('td:first').html());
-        $('empleadoApartado').text($(this).find('td:nth-child(2)').html());
-        $('clienteApartado').text($(this).find('td:nth-child(3)').html() + " " + $(this).find('td:nth-child(4)').html());
-        $('fechaApartado').text("Fecha: " + $(this).find('td:nth-child(7)').html());
-        $('totalApartado').text("$" + $(this).find('td:nth-child(6)').html());
-        $('abonoApartado').text("$" + $(this).find('td:nth-child(5)').html());
+        $('#Resultado').val($(this).find('td:first').html()); 
+        $('#empleadoApartado').text($(this).find('td:nth-child(2)').html());
+        $('#idApartado').text("Apartado #" + $(this).find('td:first').html());
+        $('#clienteApartado').text($(this).find('td:nth-child(3)').html() + " " + $(this).find('td:nth-child(4)').html());
+        $('#fechaApartado').text("Fecha: " + $(this).find('td:nth-child(7)').html());
+        $('#totalApartado').text("$" + $(this).find('td:nth-child(6)').html());
+        $('#abonoApartado').text("$" + $(this).find('td:nth-child(5)').html());
         var res = $(this).find('td:nth-child(6)').html() - $(this).find('td:nth-child(5)').html();
-        $('restanteApartado').text("$" + res);
+        $('#restanteApartado').text("$" + res);
     });
 </script>

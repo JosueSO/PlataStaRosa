@@ -25,8 +25,8 @@
     <form action="nueva_pieza.php" method="GET" id="form1">
     <div class="cont">
         <div class="buttons">
-            <a href="familias.php"><button class="toL">Familias</button></a>
-            <a href="categorias.php"><button class="toL">Categorias</button></a>
+            <a href="familias.php"><button class="toL" form="form2">Familias</button></a>
+            <a href="categorias.php"><button class="toL" form="form2">Categorias</button></a>
             <button class="toR" type="submit" value="Eliminar" name="Eliminar">Eliminar</button>
             <button class="toR" type="submit" form="form1" value="Submit">Editar</button>
             <a href="nueva_pieza.php"><button class="toR">Nuevo</button></a>
