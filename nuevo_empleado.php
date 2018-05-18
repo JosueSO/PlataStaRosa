@@ -20,6 +20,7 @@
             <li><a href="mayoristas.php">Mayoristas</a></li>
             <li><a href="empleados.php">Empleados</a></li>
             <li><a href="proveedores.php">Proveedores</a></li>
+            <li><a href="factura.php">Compra</a></li>
           </ul>
     </div>
     <div class="cont">

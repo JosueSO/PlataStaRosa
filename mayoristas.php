@@ -20,6 +20,7 @@
             <li><a class="active">Mayoristas</a></li>
             <li><a href="empleados.php">Empleados</a></li>
             <li><a href="proveedores.php">Proveedores</a></li>
+            <li><a href="factura.php">Factura</a></li>
           </ul>
     </div>
     <form action="nueva_mayorista.php" method="GET" id="form1">

@@ -20,6 +20,7 @@
             <li><a href="mayoristas.php">Mayoristas</a></li>
             <li><a href="empleados.php">Empleados</a></li>
             <li><a class="active">Proveedores</a></li>
+            <li><a href="factura.php">Factura</a></li>
           </ul>
     </div>
     <form method="POST" id="form2">

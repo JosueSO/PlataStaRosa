@@ -20,6 +20,7 @@
             <li><a href="mayoristas.php">Mayoristas</a></li>
             <li><a href="empleados.php">Empleados</a></li>
             <li><a href="proveedores.php">Proveedores</a></li>
+            <li><a href="factura.php">Compra</a></li>
           </ul>
     </div>
     <form method="POST" id="form1" action="">
@@ -40,7 +41,7 @@
                 $r3 = "'".$_GET['categoria']."'";
                 $r4 = $_GET['precio'];
                 $r5 = $_GET['unidades'];
-                echo $r1;
+                //echo $r1;
                 echo "<script> $('#R1').val($r1); </script>";
                 echo "<script> $('#R4').val(".$r4."); </script>";
                 echo "<script> $('#R5').val($r5); </script>";
@@ -62,6 +63,7 @@
                 piezas("Pieza");
                 suministra("SuministraPieza");
                 //echo "Aqui tambien";
+                header("Location: piezas.php");
             }
         ?>
         <div class="inputs">
@@ -140,7 +142,7 @@
             $conexionpg = pg_connect($cadenaConexion) or die("Error en la Conexión: ".pg_last_error());
             $total = $_POST['Existencia'] * $_POST['Precio'];
             $query = "insert into \"$table\" VALUES (".$prov.",'".$_POST['Codigo']."',".$_POST['Existencia'].",".$_POST['Precio'].",".$total.", current_date)";
-            echo $query;
+            //echo $query;
             //var_dump($query);
             $resultado = pg_query($conexionpg, $query) or die("Error en la Consulta SQL");
         }
@@ -286,11 +288,12 @@
             
             $conexionpg = pg_connect($cadenaConexion) or die("Error en la Conexión: ".pg_last_error());
             if(isset($_GET['id'])){
-                $query ="update \"$table\" set id_pieza='".$_POST['codigo']."', id_familia ='".$familia."', id_categoria='".$codigo."',precio =".$_POST['Pecio'].",cantidad=".$_POST['Existencia']." WHERE id_pieza = '".$_GET['id']."'";
+                $query ="update \"$table\" set id_familia ='".$familia."', id_categoria='".$codigo."',precio =".$_POST['Precio'].",cantidad=".$_POST['Existencia']." WHERE id_pieza = '".$_GET['id']."'";
+                //echo $query;
             }else{
             $query = "insert into \"$table\" VALUES ('".$_POST['Codigo']."','".$familia."','".$codigo."',".$_POST['Precio'].",".$_POST['Existencia'].")";
         }
-            echo $query;
+            //echo $query;
             $resultado = pg_query($conexionpg, $query) or die("Error en la Consulta SQL");
         }
         catch(PDOException $ex){
@@ -308,14 +311,16 @@
             $conexion = new PDO($fuente, $usuario);
             //echo 'Conexión establecida';
             if(isset($_GET['id'])){
-                echo 'SI ENTRA'. $_GET['id'] ;
-                $sql="update $table set id_pieza='".$_POST['Codigo']."', id_familia ='".$familia."', id_categoria='".$codigo."',precio =" .$_POST['Precio']. ",cantidad=" .$_POST['Existencia'] . ", WHERE id_pieza='".$_GET['id']."'";
+                //echo 'SI ENTRA'. $_GET['id'] ;
+                $sql="update $table set id_familia ='".$familia."', id_categoria='".$codigo."', precio =" .$_POST['Precio']. ", cantidad=" .$_POST['Existencia'] . " WHERE id_pieza='".$_GET['id']."'";
+                $resultado = $conexion->query($sql);
             }else{
             $sql = "insert into $table values('".$_POST['Codigo']."','".$familia."','".$codigo."',".$_POST['Precio'].",".$_POST['Existencia'].")";
-        }
-            echo $sql;
             $resultado = $conexion->query($sql);
-            echo 'llego aqui but no hace nada';
+        }
+            //echo $sql;
+            
+            //echo 'llego aqui but no hace nada';
         }
         catch(PDOException $ex){
                 echo 'Error en la conexión' . $ex->getMessage();

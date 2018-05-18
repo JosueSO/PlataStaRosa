@@ -20,6 +20,7 @@
             <li><a href="mayoristas.php">Mayoristas</a></li>
             <li><a href="empleados.php">Empleados</a></li>
             <li><a href="proveedores.php">Proveedores</a></li>
+            <li><a href="factura.php">Factura</a></li>
           </ul>
     </div>
     <!--form id="form2"-->
@@ -90,10 +91,10 @@
     </div>
     <!--/form-->
     <form method="POST" id="form1">
-    <input type="text" id="Resultado" name="RES"/>
     <div class="cont">
         <div class="buttons">
             <button class="toR" type="submit" form="form1" value="Submit" name="Eliminar">Eliminar</button>
+            <button class="toR" form="form2" id="Liquidar">Liquidar</button>
             <a href="#miModal"><button class="toR" form="form2" id="detail">Detalle</button></a>
         </div>
         <div class="grid">
@@ -230,5 +231,22 @@ function eliminaPG($table, $id){
         $('#abonoApartado').text("$" + $(this).find('td:nth-child(5)').html());
         var res = $(this).find('td:nth-child(6)').html() - $(this).find('td:nth-child(5)').html();
         $('#restanteApartado').text("$" + res);
+    });
+
+    $('#Liquidar').on('click',function(){
+        if ($('#idApartado').text() != ""){
+            $.ajax({
+                type: "POST",
+                url: "liquidar_apartado.php",
+                data: { 
+                    "idApartado" :  $('#idApartado').text().substring(10)
+                },
+                success: function(data){
+                    alert(data);
+                    window.location.href = "http://localhost/PlataStaRosa/ventas.php#";
+                }
+            });
+                            
+        }
     });
 </script>

@@ -21,6 +21,7 @@
             <li><a href="mayoristas.php">Mayoristas</a></li>
             <li><a href="empleados.php">Empleados</a></li>
             <li><a href="proveedores.php">Proveedores</a></li>
+            <li><a href="factura.php">Factura</a></li>
           </ul>
     </div>
     <!--form id="form2"-->
