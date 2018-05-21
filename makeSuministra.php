@@ -3,7 +3,7 @@ $conexion;
 
 $id_Pieza = $_POST['idPieza'];
 $cantidad = $_POST['cantidad'];
-$total = $_POST['total'];
+$id_Sum = $_POST['idSuministra'];
 
 MakeConnection();
 
@@ -17,21 +17,14 @@ function MakeConnection(){
     $cadenaConexion = "host=$host port=$port dbname=$dbname user=$user password=$password";
     $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: ".pg_last_error());
 
-    $query = "select * from \"Fragmentos\" WHERE tabla='Proveedor'";
-    $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
-
-    if($fila=pg_fetch_array($resultado)){
-        $t_prov = $fila[1];
-    }
-
-    $query = "select * from \"Fragmentos\" WHERE tabla='SuministraPieza'";
+    $query = "select * from \"Fragmentos\" WHERE tabla='DetalleSumin'";
     $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
 
     if($fila=pg_fetch_array($resultado)){
         $t_sum = $fila[1];
     }
 
-    insertaSuministra($t_prov, $t_sum);
+    insertaSuministra($t_sum);
 
     $query = "select * from \"Fragmentos\" WHERE tabla='Pieza'";
     $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
@@ -49,7 +42,7 @@ function MakeConnection(){
     }
 }
 
-function insertaSuministra($t_prov, $t_sum){
+function insertaSuministra($t_sum){
     $user = "postgres";
     $password = "Alijonas_963";
     $dbname = "sta_rosa";
@@ -58,23 +51,14 @@ function insertaSuministra($t_prov, $t_sum){
     $cadenaConexion = "host=$host port=$port dbname=$dbname user=$user password=$password";
 
     try{
+        global $id_Pieza;
+        global $id_Sum;
+        global $cantidad;
+
         $conexion = pg_connect($cadenaConexion) or die("Error en la Conexión: ".pg_last_error());
-        $query = "SELECT * FROM \"$t_prov\" WHERE nombre = '".$_POST['Proveedor']."'";
-
-        $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
-
-        if($fila = pg_fetch_array($resultado)){
-            $idProveedor = $fila[0];
-            
-            global $id_Pieza;
-            global $cantidad;
-            global $total;
-            $unitario = $total / $cantidad;
-
-            $query = "INSERT INTO \"".$t_sum."\" VALUES(".$idProveedor.",'".$id_Pieza."',".$cantidad.",".$unitario.",".$total.",CURRENT_DATE)";
+        $query = "INSERT INTO \"".$t_sum."\" VALUES(".$id_Sum.",'".$id_Pieza."',".$cantidad.")";
             //echo $query;
-            $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
-        }
+        $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
     }
     catch(PDOException $ex){
         echo 'Error en la conexión' . $ex->getMessage();

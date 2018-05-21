@@ -20,7 +20,7 @@
             <li><a href="mayoristas.php">Mayoristas</a></li>
             <li><a href="empleados.php">Empleados</a></li>
             <li><a href="proveedores.php">Proveedores</a></li>
-            <li><a href="factura.php">Factura</a></li>
+            <li><a href="facturas.php">Factura</a></li>
           </ul>
     </div>
     <form action="nueva_pieza.php" method="GET" id="form1">
@@ -30,7 +30,7 @@
             <a href="categorias.php"><button class="toL" form="form2">Categorias</button></a>
             <button class="toR" type="submit" value="Eliminar" name="Eliminar">Eliminar</button>
             <button class="toR" type="submit" form="form1" value="Submit">Editar</button>
-            <a href="nueva_pieza.php"><button class="toR">Nuevo</button></a>
+            <a href="nueva_pieza.php"><button class="toR" form="form3">Nuevo</button></a>
         </div>
         <div class="grid">
             <table id="TablaPiezas">

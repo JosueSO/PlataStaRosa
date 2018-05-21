@@ -95,12 +95,11 @@ function Tabla($table){
     echo $resultado;
     $con=0;
     while($fila=pg_fetch_array($resultado)){
-        if($con>0){
-        mayorista1($fila[1]);
-    }
+        if($fila[3] == 1){
+            mayorista1($fila[1]);
+        }
         else{
-        mayorista2($fila[1]);
-        $con=$con+1;
+            mayorista2($fila[1]);
         }
     }
 }

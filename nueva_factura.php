@@ -16,11 +16,11 @@
         <ul>
             <li><a href="piezas.php">Piezas</a></li>
             <li><a href="ventas.php">Ventas</a></li>
-            <li><a class="active" href="">Apartados</a></li>
+            <li><a href="apartados.php">Apartados</a></li>
             <li><a href="mayoristas.php">Mayoristas</a></li>
             <li><a href="empleados.php">Empleados</a></li>
             <li><a href="proveedores.php">Proveedores</a></li>
-            <li><a href="factura.php">Compra</a></li>
+            <li><a class="active" href="facturas.php">Facturas</a></li>
           </ul>
     </div>
     <!--form id="form2"-->
@@ -51,6 +51,7 @@
     </div>
     </form>
     <script>
+        var total = 0;
         $(document).ready(function() {
             $.ajax({
                 type: "POST",
@@ -82,41 +83,69 @@
 
         $("#cobrar").click(function () {
             var flag = false;
-            $("#TablaCompra tr").each(function (index) {
-                var campo1, campo2, campo3;
-                $(this).children("td").each(function (index2) {
-                    switch (index2) {
-                        case 0:
-                            campo1 = $(this).text();
-                            break;
-                        case 1:
-                            campo2 = $(this).text();
-                            break;
-                        case 2:
-                            campo3 = $(this).text().substring(2);
-                            break;
+            var id_sum = 0;
+            $.ajax({
+                type: "POST",
+                url: "makeSuministra1.php",
+                data: {
+                    "Proveedor": $('#ComboProveedor').val()
+                },
+                success: function(data){
+                    id_sum = data;
+                }
+            }).done(function(){
+
+                $("#TablaCompra tr").each(function (index) {
+                    var campo1, campo2, campo3;
+                    $(this).children("td").each(function (index2) {
+                        switch (index2) {
+                            case 0:
+                                campo1 = $(this).text();
+                                break;
+                            case 1:
+                                campo2 = $(this).text();
+                                break;
+                            case 2:
+                                campo3 = $(this).text().substring(2);
+                                total += Number(campo3);
+                                break;
+                        }
+                    });
+
+                    if (flag == true){
+                        //alert(id_sum);
+                        $.ajax({
+                            type: "POST",
+                            url: "makeSuministra.php",
+                            data: { 
+                                "idPieza"  : campo2,
+                                "cantidad" : campo1,
+                                "idSuministra": id_sum
+                            },
+                            success: function(data){
+                                alert(data);
+                            }
+                        });
                     }
+                    else
+                        flag = true;
                 });
 
-                if (flag == true){
-                    //alert(campo1 + ' - ' + campo2 + ' - ' + campo3);
-                    $.ajax({
+                alert(total);
+                $.ajax({
                     type: "POST",
-                    url: "makeSuministra.php",
+                    url: "actualizaSum.php",
                     data: { 
-                        "idPieza"  : campo2,
-                        "cantidad" : campo1,
-                        "total"    : campo3,
-                        "Proveedor": $('#ComboProveedor').val()
+                        "total"  : total,
+                        "idSum": id_sum
                     },
                     success: function(data){
-                        alert(data);
+                        //alert(data);
                     }
                 });
-                }
-                else
-                    flag = true;
             });
+
+            
         });
     </script>
 </body>

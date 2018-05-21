@@ -36,6 +36,7 @@
             $prov;
             MakeConnection();
             if($_SERVER['REQUEST_METHOD']=='GET'){
+                if(isset($_GET['id'])){
                 $r1 = $_GET['id'];
                 $r2 = "'".$_GET['familia']."'";
                 $r3 = "'".$_GET['categoria']."'";
@@ -53,6 +54,7 @@
                       header('Location: piezas.php');
                 }
             }
+            }
             else{
                 $_POST['flag'] = false;
             }
@@ -60,10 +62,31 @@
 
             if($_SERVER['REQUEST_METHOD']=='POST'){
                 //echo "Aqui si funciona";
-                piezas("Pieza");
-                suministra("SuministraPieza");
-                //echo "Aqui tambien";
-                header("Location: piezas.php");
+                if(isset($_GET['id'])){
+                    echo "<script>
+                        $.ajax({
+                            type: 'POST',
+                            url: 'editPieza.php',
+                            data: { 
+                                'id_Pieza'  : '".$_GET['id']."',
+                                'oldCat'  : '".$_GET['categoria']."',
+                                'Familia': '".$_POST['Familia']."',
+                                'Categoria': '".$_POST['Categoria']."',
+                                'Precio': '".$_POST['Precio']."',
+                                'Unidades': '".$_POST['Existencia']."',
+                            },
+                            success: function(data){
+                                alert(data);
+                            }
+                        });
+                    </script>";
+                }
+                else{
+                    piezas("Pieza");
+                    //suministra("SuministraPieza");
+                    //echo "Aqui tambien";
+                    header("Location: piezas.php");
+                }
             }
         ?>
         <div class="inputs">
@@ -229,11 +252,12 @@
         $query = "select * from \"Fragmentos\" WHERE tabla='$table'";
         $resultado = pg_query($conexion, $query) or die("Error en la Consulta SQL");
         $fila=pg_fetch_array($resultado);
-        //echo $fila[1];
         if( $_POST['Categoria'] != "Zirconia"){
+            
             piezaS1($fila[1]);
         }
         else{
+            
             $fila=pg_fetch_array($resultado);
             piezaS2($fila[1]);
         }
@@ -284,9 +308,10 @@
         $host = "localhost";
         $cadenaConexion = "host=$host port=$port dbname=$dbname user=$user password=$password";
         CategoriayFamilia('Familia','Categoria');
+        
         try{
-            
             $conexionpg = pg_connect($cadenaConexion) or die("Error en la Conexión: ".pg_last_error());
+           
             if(isset($_GET['id'])){
                 $query ="update \"$table\" set id_familia ='".$familia."', id_categoria='".$codigo."',precio =".$_POST['Precio'].",cantidad=".$_POST['Existencia']." WHERE id_pieza = '".$_GET['id']."'";
                 //echo $query;
@@ -344,34 +369,6 @@
         while($fil=pg_fetch_array($result)){
             claveCateg($fil[1]);
         }
-
-        /*if($_POST['Familia']=="Anillo"){
-            $familia = "ANI";
-        } elseif($_POST['Familia']=="Aretes"){
-            $familia = "ARE";
-        } elseif($_POST['Familia']=="Arracadas"){
-            $familia = "ARR";
-        
-        } elseif($_POST['Familia']=="Cadena"){
-            $familia = "CAD";
-        } elseif($_POST['Familia']=="Dije"){
-            $familia = "DIJ";
-        } elseif($_POST['Familia']=="Juego"){
-            $familia = "JUE";
-        } elseif($_POST['Familia']=="Pulsera"){
-            $familia = "PUL";
-        }
-
-        if($_POST['Categoria']=="Caucho"){
-            $codigo = "CAU";
-        } elseif($_POST['Categoria']=="Pasta"){
-            $codigo = "PAST";
-        } elseif($_POST['Categoria']=="Plata"){
-            $codigo = "PLA";
-        } elseif($_POST['Categoria']=="Zirconia"){
-            $codigo = "ZIR";
-        }
-        var_dump($codigo);*/
     }
 
     function claveFamilia($table){

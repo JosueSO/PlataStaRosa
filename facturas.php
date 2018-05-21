@@ -16,52 +16,48 @@
     <div class="navi">
         <ul>
             <li><a href="piezas.php">Piezas</a></li>
-            <li><a class="active" href="">Ventas</a></li>
+            <li><a href="ventas.php">Ventas</a></li>
             <li><a href="apartados.php">Apartados</a></li>
             <li><a href="mayoristas.php">Mayoristas</a></li>
             <li><a href="empleados.php">Empleados</a></li>
             <li><a href="proveedores.php">Proveedores</a></li>
-            <li><a href="facturas.php">Factura</a></li>
+            <li><a class="active" href="facturas.php">Facturas</a></li>
           </ul>
     </div>
     <!--form id="form2"-->
     <div id="miModal" class="modal">
         <div class="ticket">
             <div>
-                <div id="idVenta"></div>
+                <div id="idSum"></div>
                 <div class="closeB"><a href="#">X</a></div>
             </div>
-            <div class="TtoR" id="fechaVenta"></div>
-            <div class="TtoR" id="clienteVenta">
-                Josue
+            <div class="TtoR" id="fechaSum"></div>
+            <div class="TtoR" id="proveedorSum">
             </div>
             <!-- <table class="listP"> -->
                 <!-- <tr>
                     <td>AREPAS150</td>
                     <td class="TtoC">$150</td>
                 </tr> -->
-                <span id="piezasVenta">
+                <span id="piezasSum">
                 <script type='text/javascript'>
-                    
-                        $('#idVenta').on('DOMSubtreeModified', function() {
-                            if ($('#idVenta').text() != ""){
-                                //console.log("Hola");
-                                $('#piezasVenta').html("");
-                                //console.log($('#empleadoVenta').text());
-                                $.ajax({
-                                    type: "POST",
-                                    url: "getTicket.php",
-                                    data: { 
-                                        "idVenta" :  $('#idVenta').text().substring(7),
-                                        "idEmpleado": $('#empleadoVenta').text()
-                                    },
-                                    success: function(data){
-                                        $('#piezasVenta').html(data);
-                                    }
-                                });
+                    $('#idSum').on('DOMSubtreeModified', function() {
+                        if ($('#idSum').text() != ""){
+                            $('#piezasSum').html("");
                                 
-                            }
-                        });
+                            $.ajax({
+                                type: "POST",
+                                url: "getTicket3.php",
+                                data: { 
+                                    "idSum" :  $('#idSum').text().substring(7),
+                                    "idProveedor": $('#proveedorSum').text()
+                                },
+                                success: function(data){
+                                    $('#piezasSum').html(data);
+                                }
+                            });
+                        }
+                    });
                 </script>
                 </span>
             <table class="listP">    
@@ -70,56 +66,34 @@
                     <td ></td>
                 </tr>
                 <tr>
-                    <td class="TtoR">Subtotal</td>
-                    <td class="TtoC" id="subtotalVenta"></td>
-                </tr>
-                <tr>
-                    <td class="TtoR">Descuento</td>
-                    <td class="TtoC" id="descuentoVenta"></td>
-                </tr>
-                <tr>
                     <td class="TtoR">Total</td>
-                    <td class="TtoC" id="totalVenta"></td>
+                    <td class="TtoC" id="totalSum"></td>
                 </tr>
             </table>
-            
-            <div id="empleadoVenta">
-            </div>
         </div>
     </div>
     <!--/form-->
     <form method="POST" id="form1">
-    <input type="text" id="Resultado" name="RES"/>
     <div class="cont">
         <div class="buttons">
-            <button class="toR" type="submit" form="form1" value="Submit" name="Eliminar">Eliminar</button>
+            <!-- <button class="toR" type="submit" form="form1" value="Submit" name="Eliminar">Eliminar</button> -->
             <a href="#miModal"><button class="toR" form="form2" id="detail">Detalle</button></a>
+            <a href="nueva_factura.php"><button class="toR" form="form2" >Nueva</button></a>
         </div>
         <div class="grid">
-            <table id="TablaVentas">
+            <table id="TablaSum">
                 <tr>
                     <th>Folio</th>
-                    <th>Empleado</th>
-                    <th>Mayorista</th>
-                    <th>Fecha</th>
-                    <th>Subtotal</th> 
-                    <th>Descuento</th>
+                    <th>Proveedor</th>
                     <th>Total</th>
-                    
+                    <th>Fecha</th>
                 </tr>
                 <?php
-                $conexion;
-                MakeConnection();
-                    Tabla("Ventas");
+                    $conexion;
+                    MakeConnection();
+                    Tabla("SuministraPieza");
                 ?>
             </table>
-            <input type="text" id="R1" name="folio"/>
-            <input type="text" id="R2" name="empleado"/>
-            <input type="text" id="R3" name="mayorista"/>
-            <input type="text" id="R4" name="fecha"/>
-            <input type="text" id="R5" name="subtotal"/>
-            <input type="text" id="R6" name="descuento"/>
-            <input type="text" id="R7" name="total"/>
         </div>
     </div>
     </form>
@@ -159,30 +133,33 @@ function Tabla($table){
     $resultado = pg_query($conexionpg, $query) or die("Error en la Consulta SQL");
     //echo $resultado;
     $fila=pg_fetch_array($resultado);
-    ventas($fila[1]);
+    suministra($fila[1]);
 }
 
-function ventas($table){
-    $usuario = "root";
-    $fuente = "mysql:host=localhost;dbname=sta_rosa";
-    try{
-        $conexion = new PDO($fuente, $usuario);
-        //echo 'Conexión establecida';
+function suministra($table){
+    $user = "postgres";
+    $password = "Alijonas_963";
+    $dbname = "sta_rosa";
+    $port = "5432";
+    $host = "localhost";
+    $cadenaConexion = "host=$host port=$port dbname=$dbname user=$user password=$password";
         
-        $sql = "SELECT * FROM $table";
-        $resultado = $conexion->query($sql);
-        while(($fila = $resultado->fetch(PDO::FETCH_NUM)) != false){
+    try{
+        $conexionpg = pg_connect($cadenaConexion) or die("Error en la Conexión: ".pg_last_error());
+        $query = "select * from \"$table\"";
+        $resultado = pg_query($conexionpg, $query) or die("Error en la Consulta SQL");
+    
+        while($fila = pg_fetch_array($resultado)){
             echo "<tr class='par'>";
-            foreach($fila as $elemento){
-                echo "<td>".$elemento."</td>";
+            for($i = 0; $i < count($fila)/2; $i++){
+                echo "<td>".$fila[$i]."</td>";
             }
             echo "</tr>";
         }
     }
     catch(PDOException $ex){
-            echo 'Error en la conexión' . $ex->getMessage();
+        echo 'Error en la conexión' . $ex->getMessage();
     }
-    
 }
 
 function eliminar($table, $id){
@@ -216,7 +193,7 @@ function eliminaMSQL($table, $id){
     var ultimaFila = null;
     var colorOriginal;
 
-    $('#TablaVentas tr').on('click',function(){
+    $('#TablaSum tr').on('click',function(){
         //var dato = $(this).find('td:first').html();
         //$('#Resultado').val(dato);
 
@@ -228,22 +205,11 @@ function eliminaMSQL($table, $id){
         colorOriginal = $(this).find('td').css('background-color');
         $(this).find('td').css("background-color","red");
         ultimaFila = $(this).find('td');
-        $('#Resultado').val($(this).find('td:first').html()); 
-        $('#R1').val($(this).find('td:first').html()); 
-        $('#R2').val($(this).find('td:nth-child(2)').html());
-        $('#R3').val($(this).find('td:nth-child(3)').html());
-        $('#R4').val($(this).find('td:nth-child(4)').html());
-        $('#R5').val($(this).find('td:nth-child(5)').html());
-        $('#R6').val($(this).find('td:nth-child(6)').html());
-        $('#R7').val($(this).find('td:nth-child(7)').html());
 
-        $('#empleadoVenta').text($(this).find('td:nth-child(2)').html());
-        $('#idVenta').text("Venta #" + $(this).find('td:first').html());
-        
-        $('#fechaVenta').text("Fecha: " + $(this).find('td:nth-child(4)').html());
-        $('#subtotalVenta').text("$" + $(this).find('td:nth-child(5)').html());
-        $('#descuentoVenta').text($(this).find('td:nth-child(6)').html() + "%");
-        $('#totalVenta').text("$" + $(this).find('td:nth-child(7)').html());
+        $('#proveedorSum').text($(this).find('td:nth-child(2)').html());
+        $('#idSum').text("Folio #" + $(this).find('td:first').html());
+        $('#fechaSum').text("Fecha: " + $(this).find('td:nth-child(4)').html());
+        $('#totalSum').text("$" + $(this).find('td:nth-child(3)').html());
         //console.log($('#empleadoVenta').text());
 //console.log($('#idVenta').text());
     });
